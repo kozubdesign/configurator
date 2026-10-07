@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Конфигуратор LED экрана — LEDsi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon"></div>
+        <div>LEDsi <span>SMART INNOVATIONS</span></div>
+      </a>
+      <nav class="nav">
+        <a href="#">ПРОДУКЦИЯ</a>
+        <a href="#">РЕШЕНИЯ</a>
+        <a href="#">ПРОЕКТЫ</a>
+        <a href="#">КОНТАКТЫ</a>
+        <a href="#" class="active">КОНФИГУРАТОР</a>
+      </nav>
+      <div class="header-right">
+        <a href="#">ЛИЧНЫЙ КАБИНЕТ</a>
+        <a href="mailto:mail@led-si.com">mail@led-si.com</a>
+        <span class="phone">8 800 555 20 26</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="breadcrumb">
+    <a href="#">Главная</a> &nbsp;›&nbsp; Конфигуратор LED экрана
+  </div>
+
+  <!-- CONFIG VIEW -->
+  <div class="main" id="configView">
+    <h1>Конфигуратор LED экрана</h1>
+
+    <!-- LEFT PANEL -->
+    <div class="config-panel" id="configPanel">
+      <div class="config-sections">
+
+        <!-- 1. Установка -->
+        <div class="section open" data-section="install">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-title">Установка</span>
+            <span class="section-value" id="val-install">Не выбрано</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="section-body">
+            <label class="option"><input type="radio" name="install" value="outdoor" onchange="onInstallChange(this)"> На улице</label>
+            <label class="option"><input type="radio" name="install" value="indoor" onchange="onInstallChange(this)"> В помещении</label>
+          </div>
+        </div>
+
+        <!-- 2. Тип экрана -->
+        <div class="section" data-section="type">
+          <div class="section-header disabled" id="hdr-type" onclick="toggleSection(this)">
+            <span class="section-title">Тип экрана</span>
+            <span class="section-value" id="val-type">Не выбрано</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="section-body">
+            <label class="option"><input type="radio" name="type" value="ordinary" onchange="onTypeChange(this)"> Обычный экран</label>
+            <label class="option"><input type="radio" name="type" value="transparent" onchange="onTypeChange(this)"> Прозрачный экран</label>
+            <label class="option"><input type="radio" name="type" value="pylon" onchange="onTypeChange(this)"> Пилон</label>
+            <label class="option"><input type="radio" name="type" value="rental" onchange="onTypeChange(this)"> Rental</label>
+            <label class="option"><input type="radio" name="type" value="flexible" onchange="onTypeChange(this)"> Гибкий экран</label>
+            <label class="option"><input type="radio" name="type" value="custom" onchange="onTypeChange(this)"> Нестандартное решение</label>
+          </div>
+        </div>
+
+        <!-- 3. Размеры -->
+        <div class="section" data-section="size">
+          <div class="section-header disabled" id="hdr-size" onclick="toggleSection(this)">
+            <span class="section-title">Размеры, см</span>
+            <span class="section-value" id="val-size">Не выбрано</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="section-body">
+            <div class="size-group">
+              <div class="size-label">Ширина <strong id="w-val">1200</strong> см</div>
+              <input type="range" id="width" min="100" max="2000" step="10" value="1200" oninput="updateSize(true)">
+              <div class="range-ends"><span>100 см</span><span>20 000 см</span></div>
+            </div>
+            <div class="size-group">
+              <div class="size-label">Высота <strong id="h-val">200</strong> см</div>
+              <input type="range" id="height" min="100" max="1500" step="10" value="200" oninput="updateSize(true)">
+              <div class="range-ends"><span>100 см</span><span>15 000 см</span></div>
+            </div>
+            <div class="size-group">
+              <div class="size-label">Шаг пикселя <strong id="p-val">10</strong> мм</div>
+              <input type="range" id="pitch" min="2" max="20" step="1" value="10" oninput="updateSize(true)">
+              <div class="range-ends"><span>2 мм</span><span>20 мм</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Монтаж -->
+        <div class="section" data-section="mount">
+          <div class="section-header disabled" id="hdr-mount" onclick="toggleSection(this)">
+            <span class="section-title">Монтаж</span>
+            <span class="section-value" id="val-mount">Не выбрано</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="section-body">
+            <label class="option"><input type="radio" name="mount" value="turnkey" onchange="onMountChange()"> Под ключ</label>
+            <label class="option"><input type="radio" name="mount" value="supervision" onchange="onMountChange()"> Шефмонтаж</label>
+            <label class="option"><input type="radio" name="mount" value="none" onchange="onMountChange()"> Не нужен</label>
+          </div>
+        </div>
+
+        <!-- 5. Опции -->
+        <div class="section" data-section="options">
+          <div class="section-header disabled" id="hdr-options" onclick="toggleSection(this)">
+            <span class="section-title">Опции</span>
+            <span class="section-value" id="val-options">Не выбрано</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="section-body">
+            <label class="option"><input type="checkbox" name="opt" value="spares" onchange="onOptionsChange()"> Запасные части</label>
+            <label class="option"><input type="checkbox" name="opt" value="warranty" onchange="onOptionsChange()"> Расширенная гарантия — 2 года</label>
+            <label class="option"><input type="checkbox" name="opt" value="project" onchange="onOptionsChange()"> Рабочий проект</label>
+            <label class="option"><input type="checkbox" name="opt" value="color" onchange="onOptionsChange()"> Нестандартный цвет</label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-wrap">
+        <button class="btn btn-primary" id="calcBtn" disabled onclick="showResult()">Рассчитать монтаж</button>
+      </div>
+    </div>
+
+    <!-- RIGHT PREVIEW -->
+    <div class="preview" id="preview">
+      <div class="preview-placeholder" id="previewContent">
+        Выберите параметры экрана
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT VIEW -->
+  <div class="main result-view" id="resultView">
+    <h1>Конфигуратор LED экрана</h1>
+    <div class="result-panel">
+      <div class="result-content">
+        <table class="chars-table">
+          <thead><tr><th colspan="2">Основные характеристики</th></tr></thead>
+          <tbody id="charsBody"></tbody>
+        </table>
+        <table class="chars-table" style="margin-top:10px">
+          <thead><tr><th colspan="2">Дополнительные опции</th></tr></thead>
+          <tbody id="optsBody"></tbody>
+        </table>
+      </div>
+      <div class="btn-wrap">
+        <div class="result-actions">
+          <button class="btn btn-outline" onclick="backToConfig()">Назад</button>
+          <button class="btn btn-primary" onclick="openModal()" style="flex: 2">Узнать цену экрана</button>
+        </div>
+      </div>
+    </div>
+    <div class="preview" id="resultPreview"></div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="overlay" id="modalOverlay">
+    <div class="modal" id="contactModal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div id="formStep">
+        <h2>Оставьте свои данные для<br>получения расчёта LED экрана</h2>
+        <div class="form-group"><input type="text" id="f-name" placeholder="Ваше имя" required></div>
+        <div class="form-group"><input type="tel" id="f-phone" placeholder="Ваш телефон" required></div>
+        <div class="form-group"><input type="email" id="f-email" placeholder="Ваша электронная почта" required></div>
+        <label class="form-check">
+          <input type="checkbox" id="f-agree" checked>
+          <span>Я принимаю <a href="#" onclick="return false">политику обработки персональных данных</a></span>
+        </label>
+        <button class="btn btn-primary" onclick="submitForm()">Получить расчёт</button>
+      </div>
+      <div id="successStep" style="display:none">
+        <div class="success-box">
+          <h2>Предварительный расчет отправлен<br>на указанный email</h2>
+          <div class="success-email" id="sentEmail"></div>
+          <p class="success-note">Скоро с вами свяжется наш менеджер для уточнения деталей заказа и окончательного расчета стоимости</p>
+          <p class="countdown" id="countdown">Переход на Главную страницу через <span id="sec">10</span> секунд</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const state = {
+    install: null,
+    type: null,
+    width: 1200,
+    height: 200,
+    pitch: 10,
+    mount: null,
+    options: []
+  };
+
+  const typeLabels = {
+    ordinary: 'Обычный экран',
+    transparent: 'Прозрачный экран',
+    pylon: 'Пилон',
+    rental: 'Rental',
+    flexible: 'Гибкий экран',
+    custom: 'Нестандартное решение'
+  };
+  const mountLabels = {
+    turnkey: 'Под ключ',
+    supervision: 'Шефмонтаж',
+    none: 'Не нужен'
+  };
+  const optLabels = {
+    spares: 'Запасные части',
+    warranty: 'Расширенная гарантия — 2 года',
+    project: 'Рабочий проект',
+    color: 'Нестандартный цвет'
+  };
+
+  // ИНИЦИАЛИЗАЦИЯ ПЛАВНЫХ ВЫСОТ ПРИ ЗАГРУЗКЕ
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.section').forEach(sec => {
+      const body = sec.querySelector('.section-body');
+      if (sec.classList.contains('open') && body) {
+        body.style.height = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // ИДЕАЛЬНО ПЛАВНОЕ РАСКРЫТИЕ ВЫПАДАЮЩИХ МЕНЮ
+  function toggleSection(hdr) {
+    if (hdr.classList.contains('disabled')) return;
+    const sec = hdr.parentElement;
+    const body = sec.querySelector('.section-body');
+    const isOpen = sec.classList.contains('open');
+
+    // Закрываем все остальные открытые секции
+    document.querySelectorAll('.section.open').forEach(s => {
+      const b = s.querySelector('.section-body');
+      s.classList.remove('open');
+      if (b) b.style.height = '0px';
+    });
+
+    // Плавно открываем текущую секцию на точную высоту контента
+    if (!isOpen && body) {
+      sec.classList.add('open');
+      body.style.height = body.scrollHeight + 'px';
+    }
+  }
+
+  function enableSection(name) {
+    const hdr = document.getElementById('hdr-' + name);
+    if (hdr) hdr.classList.remove('disabled');
+  }
+
+  function closeSection(name) {
+    const sec = document.querySelector(`[data-section="${name}"]`);
+    if (sec) {
+      sec.classList.remove('open');
+      const body = sec.querySelector('.section-body');
+      if (body) body.style.height = '0px';
+    }
+  }
+
+  function openSection(name, keepOthers) {
+    if (!keepOthers) {
+      document.querySelectorAll('.section.open').forEach(s => {
+        s.classList.remove('open');
+        const b = s.querySelector('.section-body');
+        if (b) b.style.height = '0px';
+      });
+    }
+    const sec = document.querySelector(`[data-section="${name}"]`);
+    if (sec) {
+      sec.classList.add('open');
+      const body = sec.querySelector('.section-body');
+      if (body) body.style.height = body.scrollHeight + 'px';
+    }
+  }
+
+  function onInstallChange(el) {
+    state.install = el.value;
+    const label = el.value === 'outdoor' ? 'На улице' : 'В помещении';
+    document.getElementById('val-install').textContent = label;
+    document.getElementById('val-install').classList.add('selected');
+    enableSection('type');
+    openSection('type');
+    updatePreview();
+    checkReady();
+  }
+
+  function onTypeChange(el) {
+    state.type = el.value;
+    document.getElementById('val-type').textContent = typeLabels[el.value];
+    document.getElementById('val-type').classList.add('selected');
+    enableSection('size');
+    openSection('size');
+    updateSize(false);
+    updatePreview();
+    checkReady();
+  }
+
+  function updateSize(fromUser) {
+    state.width = +document.getElementById('width').value;
+    state.height = +document.getElementById('height').value;
+    state.pitch = +document.getElementById('pitch').value;
+    document.getElementById('w-val').textContent = state.width.toLocaleString('ru');
+    document.getElementById('h-val').textContent = state.height.toLocaleString('ru');
+    document.getElementById('p-val').textContent = state.pitch;
+    const txt = `${state.width} × ${state.height} см, шаг ${state.pitch} мм`;
+    document.getElementById('val-size').textContent = txt;
+    document.getElementById('val-size').classList.add('selected');
+    enableSection('mount');
+    if (fromUser) {
+      const mountSec = document.querySelector('[data-section="mount"]');
+      if (mountSec && !mountSec.classList.contains('open')) {
+        openSection('mount', true);
+      }
+    }
+    checkReady();
+  }
+
+  function onMountChange() {
+    const m = document.querySelector('input[name="mount"]:checked');
+    state.mount = m ? m.value : null;
+    const val = document.getElementById('val-mount');
+    if (state.mount) {
+      val.textContent = mountLabels[state.mount];
+      val.classList.add('selected');
+      
+      closeSection('size');
+      enableSection('options');
+      openSection('options');
+    } else {
+      val.textContent = 'Не выбрано';
+      val.classList.remove('selected');
+    }
+    checkReady();
+  }
+
+  function onOptionsChange() {
+    const checked = [...document.querySelectorAll('input[name="opt"]:checked')].map(c => c.value);
+    state.options = checked;
+    const val = document.getElementById('val-options');
+    if (checked.length) {
+      val.textContent = checked.map(c => optLabels[c].split('—')[0].trim()).join(', ');
+      val.classList.add('selected');
+    } else {
+      val.textContent = 'Не выбрано';
+      val.classList.remove('selected');
+    }
+    checkReady();
+  }
+
+  function checkReady() {
+    const ready = state.install && state.type && state.width && state.mount;
+    document.getElementById('calcBtn').disabled = !ready;
+  }
+
+  function updatePreview() {
+    const box = document.getElementById('previewContent');
+    if (!box) return;
+    box.innerHTML = 'Выберите параметры экрана';
+    box.className = 'preview-placeholder';
+  }
+
+  function showResult() {
+    const pxW = Math.round(state.width * 10 / state.pitch);
+    const pxH = Math.round(state.height * 10 / state.pitch);
+    const brightness = state.install === 'outdoor' ? 5500 : 1200;
+    const power = ((state.width * state.height / 10000) * 0.4).toFixed(1);
+
+    const rows = [
+      ['Расположение', state.install === 'outdoor' ? 'Outdoor' : 'Indoor'],
+      ['Размер ширина, см', state.width],
+      ['Размер высота, см', state.height],
+      ['Шаг пикселя, мм', state.pitch],
+      ['Разрешение, пикселей', `${pxW}×${pxH}`],
+      ['Яркость, кд/м²', brightness],
+      ['Мощность средн., кВт/ч', power],
+      ['Рабочая температура', state.install === 'outdoor' ? '−45° / +50°' : '−20° / +50°'],
+      ['Тип кабинета', 'Стальные кабинеты'],
+      ['Монтаж', mountLabels[state.mount] || '—'],
+      ['Гарантия, лет', state.options.includes('warranty') ? '3' : '1']
+    ];
+
+    document.getElementById('charsBody').innerHTML = rows.map(([l,v]) =>
+      `<tr><td class="label">${l}</td><td class="value">${v}</td></tr>`
+    ).join('');
+
+    const optRows = state.options.length
+      ? state.options.map(o => `<tr><td colspan="2" style="font-weight: 500; color: var(--accent);">${optLabels[o]}</td></tr>`).join('')
+      : '<tr><td colspan="2" style="color:#94a3b8">Нет</td></tr>';
+    document.getElementById('optsBody').innerHTML = optRows;
+
+    document.getElementById('resultPreview').innerHTML =
+      '<div class="preview-placeholder">Выберите параметры экрана</div>';
+
+    document.getElementById('configView').style.display = 'none';
+    document.getElementById('resultView').classList.add('active');
+  }
+
+  function backToConfig() {
+    document.getElementById('resultView').classList.remove('active');
+    document.getElementById('configView').style.display = 'grid';
+  }
+
+  function openModal() {
+    document.getElementById('formStep').style.display = 'block';
+    document.getElementById('successStep').style.display = 'none';
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('show');
+    if (timer) clearInterval(timer);
+  }
+
+  let timer = null;
+  function submitForm() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const agree = document.getElementById('f-agree').checked;
+    if (!name || !phone || !email) {
+      alert('Заполните все поля');
+      return;
+    }
+    if (!agree) {
+      alert('Необходимо принять политику обработки данных');
+      return;
+    }
+    document.getElementById('sentEmail').textContent = email;
+    document.getElementById('formStep').style.display = 'none';
+    document.getElementById('successStep').style.display = 'block';
+
+    let sec = 10;
+    document.getElementById('sec').textContent = sec;
+    timer = setInterval(() => {
+      sec--;
+      document.getElementById('sec').textContent = sec;
+      if (sec <= 0) {
+        clearInterval(timer);
+        closeModal();
+        location.reload();
+      }
+    }, 1000);
+  }
+
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  updatePreview();
+</script>
+</body>
+</html>
